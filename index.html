@@ -61,7 +61,7 @@ tbody tr:hover{background:#f8fafc}
 .num{text-align:right}
 .chip{display:inline-block;font-size:10px;padding:1px 6px;border-radius:99px;font-weight:600}
 .chip.HQ{background:#dbeafe;color:#1e40af}
-.chip.JEM{background:#fce7f3;color:#9d174d}
+.chip.Warehouse{background:#fce7f3;color:#9d174d}
 .pill{display:inline-block;padding:2px 7px;border-radius:99px;font-size:10.5px;font-weight:600}
 .pill.TO_ORDER{background:#fee2e2;color:#991b1b}
 .pill.LOW_WATCH{background:#fef3c7;color:#92400e}
@@ -111,7 +111,7 @@ tbody tr:hover{background:#f8fafc}
 <section class="section active" id="section-purchasing">
   <div class="kpis c6">
     <div class="kpi danger"><div class="lbl">To order</div><div class="val">14</div><div class="dt">Items with &lt; 2 weeks of cover</div></div>
-    <div class="kpi brand-blue"><div class="lbl">Transfer</div><div class="val" style="color:#0795F7">5</div><div class="dt">Transfer from HQ to JEM</div></div>
+    <div class="kpi brand-blue"><div class="lbl">Transfer</div><div class="val" style="color:#0795F7">5</div><div class="dt">Transfer from HQ to Warehouse</div></div>
     <div class="kpi warn"><div class="lbl">Low / Watch</div><div class="val">23</div><div class="dt">2 – 4 weeks of cover</div></div>
     <div class="kpi ok"><div class="lbl">OK</div><div class="val">68</div><div class="dt">&gt; 4 weeks of cover</div></div>
     <div class="kpi brand-blue"><div class="lbl">Open POs</div><div class="val">31</div><div class="dt">12 items on order</div></div>
@@ -120,16 +120,16 @@ tbody tr:hover{background:#f8fafc}
 
   <div class="card" style="padding:0;overflow:hidden">
     <table>
-      <thead><tr><th>Item</th><th>Description</th><th>Loc</th><th>Status</th><th class="num">Action qty</th><th class="num">Order value</th><th class="num">Wks now</th><th class="num">Weekly</th><th class="num">Lab</th><th class="num">Stores</th><th class="num">JEM</th><th class="num">On PO</th><th>Vendor</th></tr></thead>
+      <thead><tr><th>Item</th><th>Description</th><th>Loc</th><th>Status</th><th class="num">Action qty</th><th class="num">Order value</th><th class="num">Wks now</th><th class="num">Weekly</th><th class="num">Lab</th><th class="num">Stores</th><th class="num">Warehouse</th><th class="num">On PO</th><th>Vendor</th></tr></thead>
       <tbody>
         <tr><td><b>ITM-1003</b></td><td>Reagent C</td><td><span class="chip HQ">HQ</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>180</b></td><td class="num">£124</td><td class="num">1.4</td><td class="num">12.5</td><td class="num">8</td><td class="num">9</td><td class="num">—</td><td class="num">—</td><td>Vendor Alpha</td></tr>
         <tr><td><b>ITM-1007</b></td><td>Probe set G</td><td><span class="chip HQ">HQ</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>72</b></td><td class="num">£864</td><td class="num">0.8</td><td class="num">9.0</td><td class="num">4</td><td class="num">3</td><td class="num">—</td><td class="num">—</td><td>Vendor Beta</td></tr>
-        <tr><td><b>ITM-1012</b></td><td>Tip plate L</td><td><span class="chip JEM">JEM</span></td><td><span class="pill TRANSFER">TRANSFER</span></td><td class="num"><b>40</b></td><td class="num">—</td><td class="num">1.6</td><td class="num">5.2</td><td class="num">0</td><td class="num">120</td><td class="num">8</td><td class="num">—</td><td>Vendor Alpha</td></tr>
+        <tr><td><b>ITM-1012</b></td><td>Tip plate L</td><td><span class="chip Warehouse">Warehouse</span></td><td><span class="pill TRANSFER">TRANSFER</span></td><td class="num"><b>40</b></td><td class="num">—</td><td class="num">1.6</td><td class="num">5.2</td><td class="num">0</td><td class="num">120</td><td class="num">8</td><td class="num">—</td><td>Vendor Alpha</td></tr>
         <tr><td><b>ITM-1015</b></td><td>Buffer P</td><td><span class="chip HQ">HQ</span></td><td><span class="pill LOW_WATCH">LOW / WATCH</span></td><td class="num"><b>96</b></td><td class="num">£480</td><td class="num">2.4</td><td class="num">7.5</td><td class="num">10</td><td class="num">18</td><td class="num">—</td><td class="num">50</td><td>Vendor Gamma</td></tr>
-        <tr><td><b>ITM-1018</b></td><td>Swab R</td><td><span class="chip JEM">JEM</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>250</b></td><td class="num">£325</td><td class="num">0.4</td><td class="num">28.0</td><td class="num">0</td><td class="num">0</td><td class="num">12</td><td class="num">—</td><td>Vendor Delta</td></tr>
+        <tr><td><b>ITM-1018</b></td><td>Swab R</td><td><span class="chip Warehouse">Warehouse</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>250</b></td><td class="num">£325</td><td class="num">0.4</td><td class="num">28.0</td><td class="num">0</td><td class="num">0</td><td class="num">12</td><td class="num">—</td><td>Vendor Delta</td></tr>
         <tr><td><b>ITM-1023</b></td><td>Reagent V</td><td><span class="chip HQ">HQ</span></td><td><span class="pill OK">OK</span></td><td class="num">0</td><td class="num">—</td><td class="num">6.8</td><td class="num">3.2</td><td class="num">8</td><td class="num">22</td><td class="num">—</td><td class="num">—</td><td>Vendor Epsilon</td></tr>
         <tr><td><b>ITM-1029</b></td><td>Plate Y</td><td><span class="chip HQ">HQ</span></td><td><span class="pill LOW_WATCH">LOW / WATCH</span></td><td class="num"><b>60</b></td><td class="num">£210</td><td class="num">3.1</td><td class="num">4.5</td><td class="num">5</td><td class="num">14</td><td class="num">—</td><td class="num">30</td><td>Vendor Beta</td></tr>
-        <tr><td><b>ITM-1031</b></td><td>Tube A</td><td><span class="chip JEM">JEM</span></td><td><span class="pill OK">OK</span></td><td class="num">0</td><td class="num">—</td><td class="num">5.2</td><td class="num">12.0</td><td class="num">0</td><td class="num">0</td><td class="num">62</td><td class="num">—</td><td>Vendor Alpha</td></tr>
+        <tr><td><b>ITM-1031</b></td><td>Tube A</td><td><span class="chip Warehouse">Warehouse</span></td><td><span class="pill OK">OK</span></td><td class="num">0</td><td class="num">—</td><td class="num">5.2</td><td class="num">12.0</td><td class="num">0</td><td class="num">0</td><td class="num">62</td><td class="num">—</td><td>Vendor Alpha</td></tr>
       </tbody>
     </table>
   </div>
@@ -137,8 +137,8 @@ tbody tr:hover{background:#f8fafc}
 
 <section class="section" id="section-costs">
   <div class="kpis c6">
-    <div class="kpi brand-teal"><div class="lbl">Stock value</div><div class="val">£182k</div><div class="pair"><span><span class="chip HQ">HQ</span></span><b>£124k</b></div><div class="pair"><span><span class="chip JEM">JEM</span></span><b>£58k</b></div></div>
-    <div class="kpi brand-amber"><div class="lbl">Forecast spend (3 mo)</div><div class="val">£69k</div><div class="pair"><span><span class="chip HQ">HQ</span></span><b>£43k</b></div><div class="pair"><span><span class="chip JEM">JEM</span></span><b>£26k</b></div></div>
+    <div class="kpi brand-teal"><div class="lbl">Stock value</div><div class="val">£182k</div><div class="pair"><span><span class="chip HQ">HQ</span></span><b>£124k</b></div><div class="pair"><span><span class="chip Warehouse">Warehouse</span></span><b>£58k</b></div></div>
+    <div class="kpi brand-amber"><div class="lbl">Forecast spend (3 mo)</div><div class="val">£69k</div><div class="pair"><span><span class="chip HQ">HQ</span></span><b>£43k</b></div><div class="pair"><span><span class="chip Warehouse">Warehouse</span></span><b>£26k</b></div></div>
     <div class="kpi brand-blue"><div class="lbl">Open commitments</div><div class="val">£23k</div><div class="dt">31 trusted POs</div></div>
     <div class="kpi brand-blue"><div class="lbl">Expected receipts (MTD)</div><div class="val">£12.5k</div><div class="dt">8 POs scheduled</div></div>
     <div class="kpi brand-slate"><div class="lbl">Aged inventory &gt;180d</div><div class="val">£21.8k</div><div class="dt">12% of stock value</div></div>
@@ -208,7 +208,7 @@ tbody tr:hover{background:#f8fafc}
   <div class="kpis c4">
     <div class="kpi brand-amber"><div class="lbl">Kits with shortage</div><div class="val">3</div><div class="dt">Demand &gt; Availability</div></div>
     <div class="kpi brand-teal"><div class="lbl">Kits with demand (3 months)</div><div class="val">5</div><div class="dt">BC and CRM</div></div>
-    <div class="kpi warn"><div class="lbl">JEM stock variance</div><div class="val">4</div><div class="dt">Items &gt;5% JEM vs BC</div></div>
+    <div class="kpi warn"><div class="lbl">Warehouse stock variance</div><div class="val">4</div><div class="dt">Items &gt;5% Warehouse vs BC</div></div>
     <div class="kpi brand-slate"><div class="lbl">Kits with no BOM</div><div class="val">1</div><div class="dt">Add to bom_static</div></div>
   </div>
 
@@ -227,9 +227,9 @@ tbody tr:hover{background:#f8fafc}
   </div>
 
   <div class="card">
-    <h3>JEM stock variance <span class="note">JEM shelf count vs BC · sorted by item</span></h3>
+    <h3>Warehouse stock variance <span class="note">Warehouse shelf count vs BC · sorted by item</span></h3>
     <table>
-      <thead><tr><th>Item</th><th>Description</th><th class="num">JEM</th><th class="num">BC</th><th class="num">Δ</th><th class="num">%</th></tr></thead>
+      <thead><tr><th>Item</th><th>Description</th><th class="num">Warehouse</th><th class="num">BC</th><th class="num">Δ</th><th class="num">%</th></tr></thead>
       <tbody>
         <tr><td><b>ITM-1003</b></td><td>Reagent C</td><td class="num">42</td><td class="num">38</td><td class="num">+4</td><td class="num">10.5%</td></tr>
         <tr><td><b>ITM-1011</b></td><td>Tube K</td><td class="num">28</td><td class="num">35</td><td class="num">−7</td><td class="num">20.0%</td></tr>
@@ -278,7 +278,7 @@ tbody tr:hover{background:#f8fafc}
 
 </main>
 
-<footer class="footer">Demo Co · Stock &amp; Forecasting<span class="wm">Portfolio prototype · 2026</span></footer>
+<footer class="footer">Demo Co · Stock &amp; Forecasting<span class="wm">Portfolio prototype · Built by Ngo Ngofa · 2026</span></footer>
 
 <script>
 document.querySelectorAll('.tab').forEach(t => {
