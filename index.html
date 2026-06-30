@@ -28,7 +28,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:14px/1.4
 .section{display:none}.section.active{display:block}
 .kpis{display:grid;gap:12px;margin-bottom:14px}
 .kpis.c4{grid-template-columns:repeat(4,1fr)}
-.kpis.c5{grid-template-columns:repeat(5,1fr)}
 .kpis.c6{grid-template-columns:repeat(6,1fr)}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:13px 15px;box-shadow:var(--shadow);min-height:96px;display:flex;flex-direction:column;cursor:pointer;transition:transform .12s}
 .kpi:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,23,42,.10)}
@@ -38,11 +37,8 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:14px/1.4
 .kpi .pair{display:flex;align-items:baseline;gap:6px;margin-top:4px;font-size:11px;color:var(--ink2)}
 .kpi .pair b{font-size:13px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
 .kpi .cmp{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:11px;padding:1px 6px;border-radius:9px;width:fit-content;line-height:1.4}
-.kpi .cmp.up{background:#dcfce7;color:#15803d}
 .kpi .cmp.down{background:#fee2e2;color:#b91c1c}
-.kpi.danger .val{color:var(--risk)}
-.kpi.warn .val{color:var(--watch)}
-.kpi.ok .val{color:var(--ok)}
+.kpi.danger .val{color:var(--risk)}.kpi.warn .val{color:var(--watch)}.kpi.ok .val{color:var(--ok)}
 .kpi.danger{background:linear-gradient(135deg,rgba(220,38,38,.10),rgba(220,38,38,.02)),#fff;border-color:rgba(220,38,38,.28)}
 .kpi.warn{background:linear-gradient(135deg,rgba(217,119,6,.10),rgba(217,119,6,.02)),#fff;border-color:rgba(217,119,6,.30)}
 .kpi.ok{background:linear-gradient(135deg,rgba(22,163,74,.10),rgba(22,163,74,.02)),#fff;border-color:rgba(22,163,74,.28)}
@@ -87,27 +83,20 @@ tbody tr:hover{background:#f8fafc}
 </style>
 </head>
 <body>
-
 <header class="hdr">
   <div class="brand"><div class="brand-dot"></div>Demo Co<span class="sub">Stock & Forecasting</span></div>
   <div class="demo-pill">PORTFOLIO PROTOTYPE</div>
   <div class="spacer"></div>
   <span class="snap">Snapshot: 30 Jun 2026 · 14:30</span>
 </header>
-
 <nav class="tabs">
   <div class="tab active" data-tab="purchasing">Purchasing</div>
   <div class="tab" data-tab="costs">Costs</div>
   <div class="tab" data-tab="kits">Kits</div>
   <div class="tab" data-tab="dispatches">Kit Dispatches</div>
 </nav>
-
 <main class="shell">
-
-<div class="banner">
-  <b>Demo prototype.</b> Real version sits inside a Google Sheet and pulls live ERP data from BigQuery + weekly file uploads. This is a static visual of the four views — all numbers are synthetic.
-</div>
-
+<div class="banner"><b>Demo prototype.</b> Real version sits inside a Google Sheet and pulls live ERP data from BigQuery + weekly file uploads. This is a static visual of the four views — all numbers are synthetic.</div>
 <section class="section active" id="section-purchasing">
   <div class="kpis c6">
     <div class="kpi danger"><div class="lbl">To order</div><div class="val">14</div><div class="dt">Items with &lt; 2 weeks of cover</div></div>
@@ -117,10 +106,9 @@ tbody tr:hover{background:#f8fafc}
     <div class="kpi brand-blue"><div class="lbl">Open POs</div><div class="val">31</div><div class="dt">12 items on order</div></div>
     <div class="kpi brand-amber"><div class="lbl">Order value</div><div class="val">£4.2k</div><div class="dt">To-order qty × std cost</div></div>
   </div>
-
   <div class="card" style="padding:0;overflow:hidden">
     <table>
-      <thead><tr><th>Item</th><th>Description</th><th>Loc</th><th>Status</th><th class="num">Action qty</th><th class="num">Order value</th><th class="num">Wks now</th><th class="num">Weekly</th><th class="num">Lab</th><th class="num">Stores</th><th class="num">Warehouse</th><th class="num">On PO</th><th>Vendor</th></tr></thead>
+      <thead><tr><th>Item</th><th>Description</th><th>Loc</th><th>Status</th><th class="num">Action</th><th class="num">Value</th><th class="num">Wks</th><th class="num">Weekly</th><th class="num">Lab</th><th class="num">Stores</th><th class="num">Wh</th><th class="num">On PO</th><th>Vendor</th></tr></thead>
       <tbody>
         <tr><td><b>ITM-1003</b></td><td>Reagent C</td><td><span class="chip HQ">HQ</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>180</b></td><td class="num">£124</td><td class="num">1.4</td><td class="num">12.5</td><td class="num">8</td><td class="num">9</td><td class="num">—</td><td class="num">—</td><td>Vendor Alpha</td></tr>
         <tr><td><b>ITM-1007</b></td><td>Probe set G</td><td><span class="chip HQ">HQ</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>72</b></td><td class="num">£864</td><td class="num">0.8</td><td class="num">9.0</td><td class="num">4</td><td class="num">3</td><td class="num">—</td><td class="num">—</td><td>Vendor Beta</td></tr>
@@ -134,7 +122,6 @@ tbody tr:hover{background:#f8fafc}
     </table>
   </div>
 </section>
-
 <section class="section" id="section-costs">
   <div class="kpis c6">
     <div class="kpi brand-teal"><div class="lbl">Stock value</div><div class="val">£182k</div><div class="pair"><span><span class="chip HQ">HQ</span></span><b>£124k</b></div><div class="pair"><span><span class="chip Warehouse">Warehouse</span></span><b>£58k</b></div></div>
@@ -144,11 +131,10 @@ tbody tr:hover{background:#f8fafc}
     <div class="kpi brand-slate"><div class="lbl">Aged inventory &gt;180d</div><div class="val">£21.8k</div><div class="dt">12% of stock value</div></div>
     <div class="kpi brand-teal"><div class="lbl">Stock turn</div><div class="val">4.2×</div><div class="dt">87 days of inventory</div></div>
   </div>
-
   <div class="kpis c6">
-    <div class="kpi brand-amber"><div class="lbl">Goods received (MTD)</div><div class="val">£38.5k</div><div class="cmp down">▼ −7% vs last month</div><div class="pair"><span>Last month</span><b>£41.2k</b></div></div>
-    <div class="kpi brand-amber"><div class="lbl">Invoiced (MTD)</div><div class="val">£44.8k</div><div class="cmp down">▼ −5% vs last month</div><div class="pair"><span>Last month</span><b>£47.3k</b></div></div>
-    <div class="kpi brand-slate"><div class="lbl">COGS (MTD)</div><div class="val">£28.4k</div><div class="cmp down">▼ −8% vs last month</div><div class="pair"><span>Last month</span><b>£30.9k</b></div></div>
+    <div class="kpi brand-amber"><div class="lbl">Goods received (MTD)</div><div class="val">£38.5k</div><div class="cmp down">▼ −7%</div><div class="pair"><span>Last month</span><b>£41.2k</b></div></div>
+    <div class="kpi brand-amber"><div class="lbl">Invoiced (MTD)</div><div class="val">£44.8k</div><div class="cmp down">▼ −5%</div><div class="pair"><span>Last month</span><b>£47.3k</b></div></div>
+    <div class="kpi brand-slate"><div class="lbl">COGS (MTD)</div><div class="val">£28.4k</div><div class="cmp down">▼ −8%</div><div class="pair"><span>Last month</span><b>£30.9k</b></div></div>
     <div class="kpi brand-amber"><div class="lbl">Spend vs Budget</div>
       <div style="display:flex;align-items:center;gap:12px;margin-top:2px">
         <div class="donut"><div class="pct">78%</div></div>
@@ -159,9 +145,8 @@ tbody tr:hover{background:#f8fafc}
     <div class="kpi brand-teal"><div class="lbl">Kits dispatched (MTD)</div><div class="val">412</div><div class="pair"><span>Value</span><b>£32.4k</b></div></div>
     <div class="kpi brand-blue"><div class="lbl">Services shipped (MTD)</div><div class="val">18</div><div class="pair"><span>Value</span><b>£21.5k</b></div></div>
   </div>
-
   <div class="card">
-    <h3>Budget vs Actual <span class="note">Jan-26 onwards · click any bar for invoice lines</span></h3>
+    <h3>Budget vs Actual <span class="note">Jan-26 onwards</span></h3>
     <div class="bar-chart">
       <div class="bar-group"><div class="bars"><div class="bar" style="height:80%"></div><div class="bar actual" style="height:72%"></div></div><div>Jan</div></div>
       <div class="bar-group"><div class="bars"><div class="bar" style="height:75%"></div><div class="bar actual" style="height:82%"></div></div><div>Feb</div></div>
@@ -175,12 +160,11 @@ tbody tr:hover{background:#f8fafc}
       <span><span style="display:inline-block;width:12px;height:12px;background:var(--accent);border-radius:2px;vertical-align:middle"></span> Actual (invoiced)</span>
     </div>
   </div>
-
   <div class="cols-2">
     <div class="card">
-      <h3>Kit P&amp;L <span class="note">this month · grouped by kit type</span></h3>
+      <h3>Kit P&amp;L <span class="note">this month</span></h3>
       <table>
-        <thead><tr><th>Kit type</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">COGS</th><th class="num">Gross profit</th><th class="num">Margin %</th></tr></thead>
+        <thead><tr><th>Kit type</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">COGS</th><th class="num">GP</th><th class="num">Margin</th></tr></thead>
         <tbody>
           <tr><td>KIT_AIR_01</td><td class="num">128</td><td class="num">£12,840</td><td class="num">£4,096</td><td class="num">£8,744</td><td class="num">68.1%</td></tr>
           <tr><td>KIT_SOIL_02</td><td class="num">94</td><td class="num">£9,400</td><td class="num">£3,290</td><td class="num">£6,110</td><td class="num">65.0%</td></tr>
@@ -192,7 +176,7 @@ tbody tr:hover{background:#f8fafc}
     <div class="card">
       <h3>Services P&amp;L <span class="note">this month</span></h3>
       <table>
-        <thead><tr><th>Service</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">COGS</th><th class="num">Gross profit</th><th class="num">Margin %</th></tr></thead>
+        <thead><tr><th>Service</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">COGS</th><th class="num">GP</th><th class="num">Margin</th></tr></thead>
         <tbody>
           <tr><td>MBC</td><td class="num">42</td><td class="num">£18,900</td><td class="num">£4,200</td><td class="num">£14,700</td><td class="num">77.8%</td></tr>
           <tr><td>QPCR</td><td class="num">28</td><td class="num">£8,400</td><td class="num">£1,960</td><td class="num">£6,440</td><td class="num">76.7%</td></tr>
@@ -203,7 +187,6 @@ tbody tr:hover{background:#f8fafc}
     </div>
   </div>
 </section>
-
 <section class="section" id="section-kits">
   <div class="kpis c4">
     <div class="kpi brand-amber"><div class="lbl">Kits with shortage</div><div class="val">3</div><div class="dt">Demand &gt; Availability</div></div>
@@ -211,11 +194,10 @@ tbody tr:hover{background:#f8fafc}
     <div class="kpi warn"><div class="lbl">Warehouse stock variance</div><div class="val">4</div><div class="dt">Items &gt;5% Warehouse vs BC</div></div>
     <div class="kpi brand-slate"><div class="lbl">Kits with no BOM</div><div class="val">1</div><div class="dt">Add to bom_static</div></div>
   </div>
-
   <div class="card">
-    <h3>Kit availability — greedy allocator <span class="note">kits with demand · highest demand allocated first</span></h3>
+    <h3>Kit availability — greedy allocator <span class="note">highest demand allocated first</span></h3>
     <table>
-      <thead><tr><th>Kit</th><th>Description</th><th class="num">Demand</th><th class="num">Can build (allocated)</th><th class="num">Standalone max</th><th class="num">Shortage</th></tr></thead>
+      <thead><tr><th>Kit</th><th>Description</th><th class="num">Demand</th><th class="num">Can build</th><th class="num">Standalone max</th><th class="num">Shortage</th></tr></thead>
       <tbody>
         <tr><td><b>KIT_AIR_01</b></td><td>Air kit 2-swab</td><td class="num">220</td><td class="num">180</td><td class="num">240</td><td class="num" style="color:var(--risk)">40</td></tr>
         <tr><td><b>KIT_SOIL_02</b></td><td>Soil kit standard</td><td class="num">150</td><td class="num">150</td><td class="num">200</td><td class="num">0</td></tr>
@@ -225,21 +207,7 @@ tbody tr:hover{background:#f8fafc}
       </tbody>
     </table>
   </div>
-
-  <div class="card">
-    <h3>Warehouse stock variance <span class="note">Warehouse shelf count vs BC · sorted by item</span></h3>
-    <table>
-      <thead><tr><th>Item</th><th>Description</th><th class="num">Warehouse</th><th class="num">BC</th><th class="num">Δ</th><th class="num">%</th></tr></thead>
-      <tbody>
-        <tr><td><b>ITM-1003</b></td><td>Reagent C</td><td class="num">42</td><td class="num">38</td><td class="num">+4</td><td class="num">10.5%</td></tr>
-        <tr><td><b>ITM-1011</b></td><td>Tube K</td><td class="num">28</td><td class="num">35</td><td class="num">−7</td><td class="num">20.0%</td></tr>
-        <tr><td><b>ITM-1018</b></td><td>Swab R</td><td class="num">12</td><td class="num">10</td><td class="num">+2</td><td class="num">20.0%</td></tr>
-        <tr><td><b>ITM-1023</b></td><td>Reagent V</td><td class="num">55</td><td class="num">52</td><td class="num">+3</td><td class="num">5.8%</td></tr>
-      </tbody>
-    </table>
-  </div>
 </section>
-
 <section class="section" id="section-dispatches">
   <div class="kpis c4">
     <div class="kpi brand-teal"><div class="lbl">Kits dispatched (MTD)</div><div class="val">412</div><div class="dt">Jun 2026 · kits only</div></div>
@@ -247,7 +215,6 @@ tbody tr:hover{background:#f8fafc}
     <div class="kpi brand-teal"><div class="lbl">Kit types (MTD)</div><div class="val">5</div><div class="dt">Distinct kit types dispatched</div></div>
     <div class="kpi brand-amber"><div class="lbl">Top kit (MTD)</div><div class="val" style="font-size:17px">KIT_AIR_01</div><div class="dt">128 kits · 31% of MTD</div></div>
   </div>
-
   <div class="cols-2">
     <div class="card">
       <h3>Kit mix — current month</h3>
@@ -263,7 +230,7 @@ tbody tr:hover{background:#f8fafc}
       </div>
     </div>
     <div class="card">
-      <h3>Trailing 6 months <span class="note">total kits dispatched</span></h3>
+      <h3>Trailing 6 months</h3>
       <div class="bar-chart">
         <div class="bar-group"><div class="bars"><div class="bar" style="height:60%;background:var(--accent)"></div></div><div>Jan</div></div>
         <div class="bar-group"><div class="bars"><div class="bar" style="height:72%;background:var(--accent)"></div></div><div>Feb</div></div>
@@ -275,20 +242,10 @@ tbody tr:hover{background:#f8fafc}
     </div>
   </div>
 </section>
-
 </main>
-
 <footer class="footer">Demo Co · Stock &amp; Forecasting<span class="wm">Portfolio prototype · Built by Ngo Ngofa · 2026</span></footer>
-
 <script>
-document.querySelectorAll('.tab').forEach(t => {
-  t.addEventListener('click', () => {
-    var target = t.dataset.tab;
-    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x === t));
-    document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === 'section-' + target));
-  });
-});
+document.querySelectorAll('.tab').forEach(function(t){t.addEventListener('click',function(){var target=t.dataset.tab;document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x===t);});document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id==='section-'+target);});});});
 </script>
-
 </body>
 </html>
