@@ -90,11 +90,20 @@ tbody tr:hover{background:#f8fafc}
   <span class="snap">Snapshot: 30 Jun 2026 · 14:30</span>
 </header>
 <nav class="tabs">
-  <div class="tab active" data-tab="purchasing">Purchasing</div>
-  <div class="tab" data-tab="costs">Costs</div>
-  <div class="tab" data-tab="kits">Kits</div>
-  <div class="tab" data-tab="dispatches">Kit Dispatches</div>
+  <div class="tab active" id="tab-purchasing" onclick="go('purchasing')">Purchasing</div>
+  <div class="tab" id="tab-costs" onclick="go('costs')">Costs</div>
+  <div class="tab" id="tab-kits" onclick="go('kits')">Kits</div>
+  <div class="tab" id="tab-dispatches" onclick="go('dispatches')">Kit Dispatches</div>
 </nav>
+<script>
+function go(name) {
+  ['purchasing','costs','kits','dispatches'].forEach(function(n) {
+    document.getElementById('tab-' + n).className = 'tab' + (n === name ? ' active' : '');
+    document.getElementById('section-' + n).style.display = (n === name ? 'block' : 'none');
+  });
+  window.scrollTo(0, 0);
+}
+</script>
 <main class="shell">
 <div class="banner"><b>Demo prototype.</b> Real version sits inside a Google Sheet and pulls live ERP data from BigQuery + weekly file uploads. This is a static visual of the four views — all numbers are synthetic.</div>
 <section class="section active" id="section-purchasing">
