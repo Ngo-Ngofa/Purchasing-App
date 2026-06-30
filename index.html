@@ -1052,7 +1052,7 @@ function generateMockBundle() {
       avg_inventory_value: stock_value_hq + stock_value_jem - 4250,
       aged_inventory_value: Math.round((stock_value_hq + stock_value_jem) * 0.12),
       aged_inventory_pct: 12,
-      aged_inventory_items: items.slice(0,5).map(it => ({ item_no: it.item_no, description: it.description, qty: 30, unit_cost: it.unit_cost, value: 30*it.unit_cost, last_movement: '2025-12-15' })),
+      aged_items: items.slice(0,5).map(it => ({ item_no: it.item_no, description: it.description, qty: 30, unit_cost: it.unit_cost, value: 30*it.unit_cost, last_movement: '2025-12-15' })),
       kits_mtd_value: 32400,
       services_mtd: { qty: 18, value: 21500, orders: 12, items: [] },
       current_month_dispatch_qty: totalThisMonth,
@@ -1068,13 +1068,13 @@ window.google = {
     get run() {
       const state = { onSuccess: () => {}, onFailure: () => {} };
       const tsNow = () => new Date().toISOString().replace('T',' ').substring(0,19);
-      const stubUpload = rows => { setTimeout(() => state.onSuccess({ ok: true, rows_written: rows.length, uploaded_at: tsNow() }), 250); return api; };
+      const stubUpload = rows => { setTimeout(() => state.onSuccess({ ok: true, rows_written: rows.length, uploaded_at: tsNow() }), 0); return api; };
       const api = {
         withSuccessHandler(fn) { state.onSuccess = fn; return api; },
         withFailureHandler(fn) { state.onFailure = fn; return api; },
-        getFreshBundle() { setTimeout(() => state.onSuccess(JSON.stringify(generateMockBundle())), 700); return api; },
-        getReorderRecompute() { setTimeout(() => state.onSuccess(JSON.stringify(generateMockBundle())), 400); return api; },
-        saveParams(p) { Object.assign(MOCK_PARAMS, p); setTimeout(() => state.onSuccess({ ok: true, saved: p, verified: MOCK_PARAMS }), 250); return api; },
+        getFreshBundle() { setTimeout(() => state.onSuccess(JSON.stringify(generateMockBundle())), 0); return api; },
+        getReorderRecompute() { setTimeout(() => state.onSuccess(JSON.stringify(generateMockBundle())), 0); return api; },
+        saveParams(p) { Object.assign(MOCK_PARAMS, p); setTimeout(() => state.onSuccess({ ok: true, saved: p, verified: MOCK_PARAMS }), 0); return api; },
         handleJemUpload: stubUpload, handleHqUpload: stubUpload, handleCrmUpload: stubUpload,
         handleMonthlyOrdersUpload: stubUpload, handleDispatchesHistoryReplace: stubUpload,
       };
@@ -3727,32 +3727,27 @@ function normalizeDate_(v) {
   return s;
 }
 
+// Global error handler — surfaces any uncaught error in the loading panel so the demo
+// never gets stuck on "Loading…" silently. Demo-only debugging aid.
+window.addEventListener('error', e => {
+  const el = document.getElementById('loading');
+  if (el && el.style.display !== 'none') {
+    el.innerHTML = '<div style="color:#b91c1c;font-family:monospace;text-align:left;max-width:800px;margin:0 auto;padding:14px;background:#fff;border:1px solid #fecaca;border-radius:6px">' +
+      '<b>Demo failed to load</b><br><br>' +
+      (e.error && e.error.stack ? e.error.stack : (e.message || String(e))) +
+      '</div>';
+  }
+});
 bindUploads();
-// Bootstrap. Server now serves the page shell instantly without computing the bundle —
-// so on the very first load `data` is null and we fetch it async. The user sees the
-// loading panel within a second instead of staring at a blank tab for 30 seconds.
 if (data === null) {
-  $('#loading').innerHTML = 'Loading dashboard…<div style="font-size:11px;color:var(--muted);margin-top:8px">First load can take 30–60 seconds while BigQuery refreshes. Subsequent loads are instant.</div>';
-  const tClick = Date.now();
+  $('#loading').innerHTML = 'Loading demo…';
   google.script.run
     .withSuccessHandler(json => {
-      const tArrived = Date.now();
-      data = JSON.parse(json);
-      const tParsed = Date.now();
-      init();
-      const tRendered = Date.now();
-      window._lastRefreshTotalMs   = tRendered - tClick;
-      window._lastRefreshNetworkMs = tArrived  - tClick;
-      window._lastRefreshParseMs   = tParsed   - tArrived;
-      window._lastRefreshRenderMs  = tRendered - tParsed;
+      try {
+        data = JSON.parse(json);
+        init();
+      } catch (e) {
+        $('#loading').innerHTML = '<div style="color:#b91c1c;font-family:monospace;text-align:left;max-width:800px;margin:0 auto;padding:14px;background:#fff;border:1px solid #fecaca;border-radius:6px"><b>init() threw:</b><br><br>' + (e.stack || e.message) + '</div>';
+      }
     })
-    .withFailureHandler(err => {
-      $('#loading').innerHTML = '<div style="color:var(--risk)">Failed to load: ' + (err && err.message ? err.message : String(err)) + '</div><div style="margin-top:8px"><a href="javascript:location.reload()">Try again</a></div>';
-    })
-    .getFreshBundle();
-} else {
-  init();
-}
-</script>
-</body>
-</html>
+    .withFailureHandl
