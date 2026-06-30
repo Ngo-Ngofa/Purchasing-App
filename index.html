@@ -4,7 +4,7 @@
 <base target="_top">
 <meta charset="utf-8">
 <title>Stock & Forecasting — Portfolio Demo</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" onerror="var s=document.createElement('script');s.src='https://unpkg.com/chart.js@4.4.1/dist/chart.umd.js';document.head.appendChild(s);"></script>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -249,6 +249,23 @@ footer.foot .wm{display:block;font-size:8px;color:var(--muted);opacity:.7;margin
 </style>
 </head>
 <body>
+<div id="__debug" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#fffbeb;border-bottom:2px solid #f59e0b;font-family:monospace;font-size:12px;padding:6px 12px;color:#92400e">⚙ Demo loading — if this banner stays for more than 3 seconds, something failed. Errors will appear here.</div>
+<script>
+window.__dbg = function(msg) {
+  var el = document.getElementById('__debug');
+  if (el) el.innerHTML = el.innerHTML + ' · ' + msg;
+};
+window.addEventListener('error', function(e) {
+  var el = document.getElementById('__debug');
+  if (el) {
+    el.style.background = '#fee2e2';
+    el.style.borderColor = '#dc2626';
+    el.style.color = '#7f1d1d';
+    el.innerHTML = '<b>JS ERROR</b>: ' + (e.message || e) + (e.filename ? ' (' + e.filename + ':' + e.lineno + ')' : '');
+  }
+});
+window.__dbg('html parsed');
+</script>
 
 <header class="hdr">
   <div class="brand"><div class="brand-dot"></div>Demo Co<span style="font-weight:400;color:var(--ink-2);margin-left:6px">Stock and Forecasting</span></div>
@@ -801,7 +818,7 @@ window.google = { script: { get run() {
 } } };
 </script>
 <script>
-let data = JSON.parse(document.getElementById('bundle-data').textContent);
+let data = JSON.parse(document.getElementById('bundle-data').textContent); if(window.__dbg) window.__dbg('JSON parsed, rows=' + (data && data.reorderRows ? data.reorderRows.length : '?'));
 
 const $ = q => document.querySelector(q);
 const $$ = q => document.querySelectorAll(q);
@@ -3456,6 +3473,7 @@ window.addEventListener('error', e => {
   }
 });
 bindUploads();
+if(window.__dbg) window.__dbg('reached bootstrap, data=' + (data===null?'null':'object'));
 if (data === null) {
   $('#loading').innerHTML = 'Loading demo…';
   google.script.run
