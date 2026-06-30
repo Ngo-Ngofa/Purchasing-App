@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Stock & Forecasting — Portfolio Demo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{
+  --bg:#f7f8fa;--card:#fff;--ink:#111827;--ink2:#4b5563;--muted:#9ca3af;
+  --border:#e5e7eb;--accent:#28D8CF;--blue:#0795F7;--amber:#FF9D40;--coral:#FF676A;--slate:#262D37;
+  --risk:#dc2626;--watch:#d97706;--ok:#16a34a;
+  --shadow:0 1px 2px rgba(15,23,42,.06),0 2px 6px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.hdr{background:#fff;border-bottom:1px solid var(--border);padding:12px 22px;display:flex;align-items:center;gap:14px}
+.brand{font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
+.brand-dot{width:10px;height:10px;border-radius:3px;background:var(--accent)}
+.brand .sub{font-weight:400;color:var(--ink2);margin-left:4px}
+.demo-pill{background:#fef3c7;color:#92400e;font-size:11px;padding:3px 8px;border-radius:99px;font-weight:600;border:1px solid #fbbf24}
+.spacer{flex:1}
+.snap{font-size:11px;color:var(--ink2)}
+.tabs{background:#fff;padding:0 22px;border-bottom:1px solid var(--border);display:flex;gap:4px}
+.tab{padding:11px 16px;font-size:13.5px;color:var(--ink2);cursor:pointer;border-bottom:2px solid transparent;font-weight:500}
+.tab.active{color:var(--ink);border-bottom-color:var(--accent)}
+.tab:hover{color:var(--ink)}
+.shell{max-width:1500px;margin:0 auto;padding:18px}
+.section{display:none}.section.active{display:block}
+.kpis{display:grid;gap:12px;margin-bottom:14px}
+.kpis.c4{grid-template-columns:repeat(4,1fr)}
+.kpis.c6{grid-template-columns:repeat(6,1fr)}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:13px 15px;box-shadow:var(--shadow);min-height:96px;display:flex;flex-direction:column;cursor:pointer;transition:transform .12s}
+.kpi:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,23,42,.10)}
+.kpi .lbl{color:var(--ink2);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;font-weight:600}
+.kpi .val{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .dt{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.3}
+.kpi .pair{display:flex;align-items:baseline;gap:6px;margin-top:4px;font-size:11px;color:var(--ink2)}
+.kpi .pair b{font-size:13px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.kpi .cmp{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:11px;padding:1px 6px;border-radius:9px;width:fit-content;line-height:1.4}
+.kpi .cmp.down{background:#fee2e2;color:#b91c1c}
+.kpi.danger .val{color:var(--risk)}.kpi.warn .val{color:var(--watch)}.kpi.ok .val{color:var(--ok)}
+.kpi.danger{background:linear-gradient(135deg,rgba(220,38,38,.10),rgba(220,38,38,.02)),#fff;border-color:rgba(220,38,38,.28)}
+.kpi.warn{background:linear-gradient(135deg,rgba(217,119,6,.10),rgba(217,119,6,.02)),#fff;border-color:rgba(217,119,6,.30)}
+.kpi.ok{background:linear-gradient(135deg,rgba(22,163,74,.10),rgba(22,163,74,.02)),#fff;border-color:rgba(22,163,74,.28)}
+.kpi.brand-teal{background:linear-gradient(135deg,rgba(40,216,207,.18),rgba(40,216,207,.05)),#fff;border-color:rgba(40,216,207,.30)}
+.kpi.brand-blue{background:linear-gradient(135deg,rgba(7,149,247,.14),rgba(7,149,247,.04)),#fff;border-color:rgba(7,149,247,.28)}
+.kpi.brand-amber{background:linear-gradient(135deg,rgba(255,157,64,.18),rgba(255,157,64,.05)),#fff;border-color:rgba(255,157,64,.32)}
+.kpi.brand-slate{background:linear-gradient(135deg,rgba(38,45,55,.09),rgba(38,45,55,.02)),#fff;border-color:rgba(38,45,55,.20)}
+.card{background:#fff;border:1px solid var(--border);border-radius:7px;padding:14px 16px;margin-bottom:13px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 10px;font-size:11.5px;text-transform:uppercase;color:var(--ink2);letter-spacing:.05em;font-weight:600;display:flex;align-items:center;gap:8px}
+.card h3 .note{text-transform:none;letter-spacing:0;color:var(--muted);font-size:10.5px;font-weight:400}
+.card h3 .note::before{content:"·";margin-right:6px;color:var(--border)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead th{font-weight:600;color:var(--ink2);text-align:left;padding:8px 9px;border-bottom:1px solid var(--border);background:#fafbfc;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em}
+tbody td{padding:7px 9px;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
+tbody tr:hover{background:#f8fafc}
+.num{text-align:right}
+.chip{display:inline-block;font-size:10px;padding:1px 6px;border-radius:99px;font-weight:600}
+.chip.HQ{background:#dbeafe;color:#1e40af}
+.chip.JEM{background:#fce7f3;color:#9d174d}
+.pill{display:inline-block;padding:2px 7px;border-radius:99px;font-size:10.5px;font-weight:600}
+.pill.TO_ORDER{background:#fee2e2;color:#991b1b}
+.pill.LOW_WATCH{background:#fef3c7;color:#92400e}
+.pill.OK{background:#dcfce7;color:#166534}
+.pill.TRANSFER{background:#dbeafe;color:#0795F7}
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.bar-chart{display:flex;align-items:end;gap:8px;height:200px;padding:8px 0;border-bottom:1px solid var(--border)}
+.bar-chart .bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;color:var(--ink2)}
+.bar-chart .bars{display:flex;gap:2px;width:100%;align-items:end;height:170px}
+.bar-chart .bar{flex:1;background:var(--blue);border-radius:2px 2px 0 0;min-height:2px}
+.bar-chart .bar.actual{background:var(--accent)}
+.donut{width:80px;height:80px;border-radius:50%;background:conic-gradient(var(--amber) 0% 78%,#eef2f7 78% 100%);display:flex;align-items:center;justify-content:center;position:relative}
+.donut::before{content:"";position:absolute;inset:14px;background:#fff;border-radius:50%}
+.donut .pct{position:relative;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.pie-row{display:flex;gap:18px;align-items:center}
+.pie{width:160px;height:160px;border-radius:50%;background:conic-gradient(var(--accent) 0% 28%,var(--blue) 28% 52%,var(--amber) 52% 73%,var(--coral) 73% 87%,var(--slate) 87% 100%)}
+.pie-leg{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:12px}
+.pie-leg .key{display:flex;align-items:center;gap:6px}
+.pie-leg .sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+.footer{text-align:center;color:var(--muted);padding:22px;font-size:11px}
+.footer .wm{display:block;font-size:8px;color:var(--muted);opacity:.7;margin-top:3px}
+.banner{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;padding:10px 14px;border-radius:7px;margin-bottom:13px;font-size:12.5px}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="brand"><div class="brand-dot"></div>Demo Co<span class="sub">Stock & Forecasting</span></div>
+  <div class="demo-pill">PORTFOLIO PROTOTYPE</div>
+  <div class="spacer"></div>
+  <span class="snap">Snapshot: 30 Jun 2026 · 14:30</span>
+</header>
+<nav class="tabs">
+  <div class="tab active" data-tab="purchasing">Purchasing</div>
+  <div class="tab" data-tab="costs">Costs</div>
+  <div class="tab" data-tab="kits">Kits</div>
+  <div class="tab" data-tab="dispatches">Kit Dispatches</div>
+</nav>
+<main class="shell">
+<div class="banner"><b>Demo prototype.</b> Real version sits inside a Google Sheet and pulls live ERP data from BigQuery + weekly file uploads. This is a static visual of the four views — all numbers are synthetic.</div>
+<section class="section active" id="section-purchasing">
+  <div class="kpis c6">
+    <div class="kpi danger"><div class="lbl">To order</div><div class="val">14</div><div class="dt">Items with &lt; 2 weeks of cover</div></div>
+    <div class="kpi brand-blue"><div class="lbl">Transfer</div><div class="val" style="color:#0795F7">5</div><div class="dt">Transfer from HQ to JEM</div></div>
+    <div class="kpi warn"><div class="lbl">Low / Watch</div><div class="val">23</div><div class="dt">2 – 4 weeks of cover</div></div>
+    <div class="kpi ok"><div class="lbl">OK</div><div class="val">68</div><div class="dt">&gt; 4 weeks of cover</div></div>
+    <div class="kpi brand-blue"><div class="lbl">Open POs</div><div class="val">31</div><div class="dt">12 items on order</div></div>
+    <div class="kpi brand-amber"><div class="lbl">Order value</div><div class="val">£4.2k</div><div class="dt">To-order qty × std cost</div></div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table>
+      <thead><tr><th>Item</th><th>Description</th><th>Loc</th><th>Status</th><th class="num">Action</th><th class="num">Value</th><th class="num">Wks</th><th class="num">Weekly</th><th class="num">Lab</th><th class="num">Stores</th><th class="num">JEM</th><th class="num">On PO</th><th>Vendor</th></tr></thead>
+      <tbody>
+        <tr><td><b>ITM-1003</b></td><td>Reagent C</td><td><span class="chip HQ">HQ</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>180</b></td><td class="num">£124</td><td class="num">1.4</td><td class="num">12.5</td><td class="num">8</td><td class="num">9</td><td class="num">—</td><td class="num">—</td><td>Vendor Alpha</td></tr>
+        <tr><td><b>ITM-1007</b></td><td>Probe set G</td><td><span class="chip HQ">HQ</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>72</b></td><td class="num">£864</td><td class="num">0.8</td><td class="num">9.0</td><td class="num">4</td><td class="num">3</td><td class="num">—</td><td class="num">—</td><td>Vendor Beta</td></tr>
+        <tr><td><b>ITM-1012</b></td><td>Tip plate L</td><td><span class="chip JEM">JEM</span></td><td><span class="pill TRANSFER">TRANSFER</span></td><td class="num"><b>40</b></td><td class="num">—</td><td class="num">1.6</td><td class="num">5.2</td><td class="num">0</td><td class="num">120</td><td class="num">8</td><td class="num">—</td><td>Vendor Alpha</td></tr>
+        <tr><td><b>ITM-1015</b></td><td>Buffer P</td><td><span class="chip HQ">HQ</span></td><td><span class="pill LOW_WATCH">LOW / WATCH</span></td><td class="num"><b>96</b></td><td class="num">£480</td><td class="num">2.4</td><td class="num">7.5</td><td class="num">10</td><td class="num">18</td><td class="num">—</td><td class="num">50</td><td>Vendor Gamma</td></tr>
+        <tr><td><b>ITM-1018</b></td><td>Swab R</td><td><span class="chip JEM">JEM</span></td><td><span class="pill TO_ORDER">TO ORDER</span></td><td class="num"><b>250</b></td><td class="num">£325</td><td class="num">0.4</td><td class="num">28.0</td><td class="num">0</td><td class="num">0</td><td class="num">12</td><td class="num">—</td><td>Vendor Delta</td></tr>
+        <tr><td><b>ITM-1023</b></td><td>Reagent V</td><td><span class="chip HQ">HQ</span></td><td><span class="pill OK">OK</span></td><td class="num">0</td><td class="num">—</td><td class="num">6.8</td><td class="num">3.2</td><td class="num">8</td><td class="num">22</td><td class="num">—</td><td class="num">—</td><td>Vendor Epsilon</td></tr>
+        <tr><td><b>ITM-1029</b></td><td>Plate Y</td><td><span class="chip HQ">HQ</span></td><td><span class="pill LOW_WATCH">LOW / WATCH</span></td><td class="num"><b>60</b></td><td class="num">£210</td><td class="num">3.1</td><td class="num">4.5</td><td class="num">5</td><td class="num">14</td><td class="num">—</td><td class="num">30</td><td>Vendor Beta</td></tr>
+        <tr><td><b>ITM-1031</b></td><td>Tube A</td><td><span class="chip JEM">JEM</span></td><td><span class="pill OK">OK</span></td><td class="num">0</td><td class="num">—</td><td class="num">5.2</td><td class="num">12.0</td><td class="num">0</td><td class="num">0</td><td class="num">62</td><td class="num">—</td><td>Vendor Alpha</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="section" id="section-costs">
+  <div class="kpis c6">
+    <div class="kpi brand-teal"><div class="lbl">Stock value</div><div class="val">£182k</div><div class="pair"><span><span class="chip HQ">HQ</span></span><b>£124k</b></div><div class="pair"><span><span class="chip JEM">JEM</span></span><b>£58k</b></div></div>
+    <div class="kpi brand-amber"><div class="lbl">Forecast spend (3 mo)</div><div class="val">£69k</div><div class="pair"><span><span class="chip HQ">HQ</span></span><b>£43k</b></div><div class="pair"><span><span class="chip JEM">JEM</span></span><b>£26k</b></div></div>
+    <div class="kpi brand-blue"><div class="lbl">Open commitments</div><div class="val">£23k</div><div class="dt">31 trusted POs</div></div>
+    <div class="kpi brand-blue"><div class="lbl">Expected receipts (MTD)</div><div class="val">£12.5k</div><div class="dt">8 POs scheduled</div></div>
+    <div class="kpi brand-slate"><div class="lbl">Aged inventory &gt;180d</div><div class="val">£21.8k</div><div class="dt">12% of stock value</div></div>
+    <div class="kpi brand-teal"><div class="lbl">Stock turn</div><div class="val">4.2×</div><div class="dt">87 days of inventory</div></div>
+  </div>
+  <div class="kpis c6">
+    <div class="kpi brand-amber"><div class="lbl">Goods received (MTD)</div><div class="val">£38.5k</div><div class="cmp down">▼ −7%</div><div class="pair"><span>Last month</span><b>£41.2k</b></div></div>
+    <div class="kpi brand-amber"><div class="lbl">Invoiced (MTD)</div><div class="val">£44.8k</div><div class="cmp down">▼ −5%</div><div class="pair"><span>Last month</span><b>£47.3k</b></div></div>
+    <div class="kpi brand-slate"><div class="lbl">COGS (MTD)</div><div class="val">£28.4k</div><div class="cmp down">▼ −8%</div><div class="pair"><span>Last month</span><b>£30.9k</b></div></div>
+    <div class="kpi brand-amber"><div class="lbl">Spend vs Budget</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:2px">
+        <div class="donut"><div class="pct">78%</div></div>
+        <div style="flex:1"><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">£42.9k</div><div style="font-size:10.5px;color:var(--ink2);margin-top:2px">of <b style="color:var(--ink)">£55k</b></div></div>
+      </div>
+      <div class="dt" style="margin-top:4px">Received or committed</div>
+    </div>
+    <div class="kpi brand-teal"><div class="lbl">Kits dispatched (MTD)</div><div class="val">412</div><div class="pair"><span>Value</span><b>£32.4k</b></div></div>
+    <div class="kpi brand-blue"><div class="lbl">Services shipped (MTD)</div><div class="val">18</div><div class="pair"><span>Value</span><b>£21.5k</b></div></div>
+  </div>
+  <div class="card">
+    <h3>Budget vs Actual <span class="note">Jan-26 onwards</span></h3>
+    <div class="bar-chart">
+      <div class="bar-group"><div class="bars"><div class="bar" style="height:80%"></div><div class="bar actual" style="height:72%"></div></div><div>Jan</div></div>
+      <div class="bar-group"><div class="bars"><div class="bar" style="height:75%"></div><div class="bar actual" style="height:82%"></div></div><div>Feb</div></div>
+      <div class="bar-group"><div class="bars"><div class="bar" style="height:85%"></div><div class="bar actual" style="height:76%"></div></div><div>Mar</div></div>
+      <div class="bar-group"><div class="bars"><div class="bar" style="height:70%"></div><div class="bar actual" style="height:68%"></div></div><div>Apr</div></div>
+      <div class="bar-group"><div class="bars"><div class="bar" style="height:90%"></div><div class="bar actual" style="height:85%"></div></div><div>May</div></div>
+      <div class="bar-group"><div class="bars"><div class="bar" style="height:78%"></div><div class="bar actual" style="height:72%"></div></div><div>Jun</div></div>
+    </div>
+    <div style="display:flex;gap:18px;margin-top:8px;font-size:11px;color:var(--ink2)">
+      <span><span style="display:inline-block;width:12px;height:12px;background:var(--blue);border-radius:2px;vertical-align:middle"></span> Budget</span>
+      <span><span style="display:inline-block;width:12px;height:12px;background:var(--accent);border-radius:2px;vertical-align:middle"></span> Actual (invoiced)</span>
+    </div>
+  </div>
+  <div class="cols-2">
+    <div class="card">
+      <h3>Kit P&amp;L <span class="note">this month</span></h3>
+      <table>
+        <thead><tr><th>Kit type</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">COGS</th><th class="num">GP</th><th class="num">Margin</th></tr></thead>
+        <tbody>
+          <tr><td>KIT_AIR_01</td><td class="num">128</td><td class="num">£12,840</td><td class="num">£4,096</td><td class="num">£8,744</td><td class="num">68.1%</td></tr>
+          <tr><td>KIT_SOIL_02</td><td class="num">94</td><td class="num">£9,400</td><td class="num">£3,290</td><td class="num">£6,110</td><td class="num">65.0%</td></tr>
+          <tr><td>KIT_WATER_03</td><td class="num">76</td><td class="num">£7,600</td><td class="num">£2,888</td><td class="num">£4,712</td><td class="num">62.0%</td></tr>
+          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Total</td><td class="num">298</td><td class="num">£29,840</td><td class="num">£10,274</td><td class="num">£19,566</td><td class="num">65.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Services P&amp;L <span class="note">this month</span></h3>
+      <table>
+        <thead><tr><th>Service</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">COGS</th><th class="num">GP</th><th class="num">Margin</th></tr></thead>
+        <tbody>
+          <tr><td>MBC</td><td class="num">42</td><td class="num">£18,900</td><td class="num">£4,200</td><td class="num">£14,700</td><td class="num">77.8%</td></tr>
+          <tr><td>QPCR</td><td class="num">28</td><td class="num">£8,400</td><td class="num">£1,960</td><td class="num">£6,440</td><td class="num">76.7%</td></tr>
+          <tr><td>GCN</td><td class="num">15</td><td class="num">£4,500</td><td class="num">£1,200</td><td class="num">£3,300</td><td class="num">73.3%</td></tr>
+          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Total</td><td class="num">85</td><td class="num">£31,800</td><td class="num">£7,360</td><td class="num">£24,440</td><td class="num">76.9%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<section class="section" id="section-kits">
+  <div class="kpis c4">
+    <div class="kpi brand-amber"><div class="lbl">Kits with shortage</div><div class="val">3</div><div class="dt">Demand &gt; Availability</div></div>
+    <div class="kpi brand-teal"><div class="lbl">Kits with demand (3 months)</div><div class="val">5</div><div class="dt">BC and CRM</div></div>
+    <div class="kpi warn"><div class="lbl">JEM stock variance</div><div class="val">4</div><div class="dt">Items &gt;5% JEM vs BC</div></div>
+    <div class="kpi brand-slate"><div class="lbl">Kits with no BOM</div><div class="val">1</div><div class="dt">Add to bom_static</div></div>
+  </div>
+  <div class="card">
+    <h3>Kit availability — greedy allocator <span class="note">highest demand allocated first</span></h3>
+    <table>
+      <thead><tr><th>Kit</th><th>Description</th><th class="num">Demand</th><th class="num">Can build</th><th class="num">Standalone max</th><th class="num">Shortage</th></tr></thead>
+      <tbody>
+        <tr><td><b>KIT_AIR_01</b></td><td>Air kit 2-swab</td><td class="num">220</td><td class="num">180</td><td class="num">240</td><td class="num" style="color:var(--risk)">40</td></tr>
+        <tr><td><b>KIT_SOIL_02</b></td><td>Soil kit standard</td><td class="num">150</td><td class="num">150</td><td class="num">200</td><td class="num">0</td></tr>
+        <tr><td><b>KIT_WATER_03</b></td><td>Water kit eDNA</td><td class="num">95</td><td class="num">80</td><td class="num">130</td><td class="num" style="color:var(--risk)">15</td></tr>
+        <tr><td><b>KIT_AIR_04</b></td><td>Air kit single-swab</td><td class="num">110</td><td class="num">95</td><td class="num">160</td><td class="num" style="color:var(--risk)">15</td></tr>
+        <tr><td><b>KIT_SWAB_05</b></td><td>Swab kit basic</td><td class="num">60</td><td class="num">60</td><td class="num">75</td><td class="num">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="section" id="section-dispatches">
+  <div class="kpis c4">
+    <div class="kpi brand-teal"><div class="lbl">Kits dispatched (MTD)</div><div class="val">412</div><div class="dt">Jun 2026 · kits only</div></div>
+    <div class="kpi brand-blue"><div class="lbl">Orders (MTD)</div><div class="val">98</div><div class="dt">Distinct sales orders this month</div></div>
+    <div class="kpi brand-teal"><div class="lbl">Kit types (MTD)</div><div class="val">5</div><div class="dt">Distinct kit types dispatched</div></div>
+    <div class="kpi brand-amber"><div class="lbl">Top kit (MTD)</div><div class="val" style="font-size:17px">KIT_AIR_01</div><div class="dt">128 kits · 31% of MTD</div></div>
+  </div>
+  <div class="cols-2">
+    <div class="card">
+      <h3>Kit mix — current month</h3>
+      <div class="pie-row">
+        <div class="pie"></div>
+        <div class="pie-leg">
+          <div class="key"><span class="sw" style="background:var(--accent)"></span> KIT_AIR_01 (31%)</div>
+          <div class="key"><span class="sw" style="background:var(--blue)"></span> KIT_SOIL_02 (24%)</div>
+          <div class="key"><span class="sw" style="background:var(--amber)"></span> KIT_WATER_03 (21%)</div>
+          <div class="key"><span class="sw" style="background:var(--coral)"></span> KIT_AIR_04 (14%)</div>
+          <div class="key"><span class="sw" style="background:var(--slate)"></span> KIT_SWAB_05 (10%)</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Trailing 6 months</h3>
+      <div class="bar-chart">
+        <div class="bar-group"><div class="bars"><div class="bar" style="height:60%;background:var(--accent)"></div></div><div>Jan</div></div>
+        <div class="bar-group"><div class="bars"><div class="bar" style="height:72%;background:var(--accent)"></div></div><div>Feb</div></div>
+        <div class="bar-group"><div class="bars"><div class="bar" style="height:68%;background:var(--accent)"></div></div><div>Mar</div></div>
+        <div class="bar-group"><div class="bars"><div class="bar" style="height:80%;background:var(--accent)"></div></div><div>Apr</div></div>
+        <div class="bar-group"><div class="bars"><div class="bar" style="height:90%;background:var(--accent)"></div></div><div>May</div></div>
+        <div class="bar-group"><div class="bars"><div class="bar" style="height:85%;background:var(--accent)"></div></div><div>Jun</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="footer">Demo Co · Stock &amp; Forecasting<span class="wm">Portfolio prototype · 2026</span></footer>
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.addEventListener('click',function(){var target=t.dataset.tab;document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('active',x===t);});document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id==='section-'+target);});});});
+</script>
+</body>
+</html>
